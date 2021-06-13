@@ -6,9 +6,16 @@ console.log('using config', rc)
 const client = new Client('irc.libera.chat', 'linkbot', {
   channels: [rc.channel],
   port: 6697,
+  nick: 'linkbot',
+  userName: 'linkbot',
+  realName: 'linkbot',
+  password: rc.password,
   debug: true,
   autoConnect: false,
   secure: true,
+  sasl: true,
+  selfSigned: true,
+  certExpired: true,
   stripColors: true
 })
 
