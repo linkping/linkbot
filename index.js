@@ -1,8 +1,6 @@
 import rc from './rc.js'
 import { Client } from 'irc'
 
-console.log('using config', rc)
-
 const client = new Client('irc.libera.chat', 'linkbot', {
   channels: [rc.channel],
   port: 6697,
