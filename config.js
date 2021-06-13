@@ -5,5 +5,11 @@ export const config = rc('linkping', {
     channel: '##linkpingdev',
     retryConnect: 5,
     password: 'fakepassword'
+  },
+  mqtt: {
+    host: 'localhost',
+    port: 1883,
+    username: 'linkping-mqtt-user',
+    password: 'fakepass'
   }
 })
