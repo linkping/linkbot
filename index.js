@@ -1,13 +1,13 @@
-import rc from './rc.js'
+import { config } from './config.js'
 import { Client } from 'matrix-org-irc'
 
 const client = new Client('irc.libera.chat', 'linkbot', {
-  channels: [rc.channel],
+  channels: [config.bot.channel],
   port: 6697,
   nick: 'linkbot',
   userName: 'linkbot',
   realName: 'linkbot',
-  password: rc.password,
+  password: config.bot.password,
   debug: true,
   autoConnect: false,
   secure: true,
@@ -17,9 +17,9 @@ const client = new Client('irc.libera.chat', 'linkbot', {
   stripColors: true
 })
 
-const say = text => client.say(rc.channel, text)
+const say = text => client.say(config.bot.channel, text)
 
-client.connect(rc.retryConnect, () => {
+client.connect(config.bot.retryConnect, () => {
   console.log('bot connected')
 })
 
