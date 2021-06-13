@@ -1,0 +1,34 @@
+{
+  "name": "linkbot",
+  "version": "0.0.0",
+  "description": "linkping irc bot",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "irc": "^0.5.2",
+    "rc": "^1.2.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "standard": "^16.0.3"
+  },
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/linkping/linkbot.git"
+  },
+  "keywords": [
+    "irc",
+    "bot",
+    "linkping"
+  ],
+  "author": "ralphtheninja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/linkping/linkbot/issues"
+  },
+  "homepage": "https://github.com/linkping/linkbot#readme"
+}
