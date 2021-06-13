@@ -1,6 +1,6 @@
 import rc from 'rc'
 
-export default rc('linkping', {
+export default rc('linkbot', {
   channel: '##linkpingdev',
   retryConnect: 5
 })
