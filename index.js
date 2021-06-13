@@ -1,5 +1,5 @@
 import rc from './rc.js'
-import { Client } from 'irc'
+import { Client } from 'matrix-org-irc'
 
 const client = new Client('irc.libera.chat', 'linkbot', {
   channels: [rc.channel],

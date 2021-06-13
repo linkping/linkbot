@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
-    "irc": "^0.5.2",
+    "matrix-org-irc": "^1.0.0",
     "rc": "^1.2.8"
   },
   "devDependencies": {
