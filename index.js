@@ -42,7 +42,7 @@ client.connect(config.bot.retryConnect, () => {
 })
 
 client.on('message', (nick, to, text, message) => {
-  log.info('message', nick, to, text, message)
+  log.info('message', nick, to, `'${text}'`, message)
   if (text.startsWith('linkbot')) {
     say('hello')
   }
