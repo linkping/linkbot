@@ -7,7 +7,8 @@
   "dependencies": {
     "matrix-org-irc": "^1.0.0",
     "mqtt": "^4.2.6",
-    "rc": "^1.2.8"
+    "rc": "^1.2.8",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.7",
