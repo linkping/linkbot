@@ -20,6 +20,7 @@ const client = new Client('irc.libera.chat', 'linkbot', {
 })
 
 const say = text => client.say(config.bot.channel, text)
+const tell = (who, text) => client.say(who, text)
 
 const mqtt = createMqttClient()
 
@@ -43,7 +44,13 @@ client.connect(config.bot.retryConnect, () => {
 
 client.on('message', (nick, to, text, message) => {
   log.info('message', nick, to, `'${text}'`, message)
-  if (text.startsWith('linkbot')) {
-    say('hello')
+  if (/^!help/.test(text)) {
+    tell(nick, usage())
   }
 })
+
+function usage () {
+  return [
+    '!help -- this command (well duh)'
+  ].join('\n')
+}
