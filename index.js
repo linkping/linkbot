@@ -23,11 +23,11 @@ const say = text => client.say(config.bot.channel, text)
 
 const mqtt = createMqttClient()
 
-const publish = (topic, message) => {
-  mqtt.publish(topic, JSON.stringify(message), { qos: 2 }, (err) => {
-    if (err) log.error('mqtt.publish error', err)
-  })
-}
+// const publish = (topic, message) => {
+//   mqtt.publish(topic, JSON.stringify(message), { qos: 2 }, (err) => {
+//     if (err) log.error('mqtt.publish error', err)
+//   })
+// }
 
 mqtt.on('message', (topic, message) => {
   const data = JSON.parse(message.toString())
