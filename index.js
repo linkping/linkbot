@@ -46,6 +46,8 @@ client.on('message', (nick, to, text, message) => {
   log.info('message', nick, to, `'${text}'`, message)
   if (/^!help/.test(text)) {
     tell(nick, usage())
+  } else if (/^!/.test(text)) {
+    tell(nick, `unknown command: '${text}'`)
   }
 })
 
