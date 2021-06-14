@@ -1,3 +1,5 @@
+const isDebug = process.env.DEBUG === 'linkping'
+
 function createLogger (who) {
   function log (level) {
     return function () {
@@ -13,8 +15,12 @@ function createLogger (who) {
   }
   return {
     info: log('INFO'),
+    debug: isDebug ? log('DEBUG') : noop,
+    warn: log('WARNING'),
     error: log('ERROR')
   }
 }
+
+function noop () {}
 
 export default createLogger('linkbot')
