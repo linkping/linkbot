@@ -19,9 +19,23 @@ const client = new Client('irc.libera.chat', 'linkbot', {
   stripColors: true
 })
 
+const say = text => client.say(config.bot.channel, text)
+
 const mqtt = createMqttClient()
 
-const say = text => client.say(config.bot.channel, text)
+const publish = (topic, message) => {
+  mqtt.publish(topic, JSON.stringify(message), { qos: 2 }, (err) => {
+    if (err) log.error('mqtt.publish error', err)
+  })
+}
+
+mqtt.on('message', (topic, message) => {
+  const data = JSON.parse(message.toString())
+  log.info('mqtt message', topic, data)
+  if (topic === 'door/open') {
+    say(`door opened ${message.toString()}`)
+  }
+})
 
 client.connect(config.bot.retryConnect, () => {
   log.info('bot connected')

@@ -17,22 +17,12 @@ function createMqttClient () {
 
   client.on('connect', () => {
     log.info('mqtt client connected to broker')
-    client.on('message', (topic, message) => {
-      const data = JSON.parse(message.toString())
-      log.info('mqtt message', topic, data)
-    })
     client.subscribe(TOPICS, (err) => {
       if (err) log.error('mqtt.subscribe error', err)
     })
   })
 
-  return {
-    publish: (topic, message) => {
-      client.publish(`linkbot/${topic}`, JSON.stringify(message), { qos: 2 }, (err) => {
-        if (err) log.error('mqtt.publish error', err)
-      })
-    }
-  }
+  return client
 }
 
 export default createMqttClient
