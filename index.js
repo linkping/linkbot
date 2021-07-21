@@ -38,8 +38,20 @@ mqtt.on('message', (topic, message) => {
   }
 })
 
-client.connect(config.bot.retryConnect, () => {
-  log.info('bot connected')
+client.connect(() => log.info('bot connected'))
+
+// Remove all event handlers for close and timeout to skip retry logic
+client.conn.removeAllListeners('close')
+client.conn.removeAllListeners('timeout')
+
+client.conn.addListener('close', () => {
+  log.info('got close event, restarting')
+  process.exit(0)
+})
+
+client.conn.addListener('timeout', () => {
+  log.info('got timeout event, restarting')
+  process.exit(0)
 })
 
 client.on('message', (nick, to, text, message) => {
