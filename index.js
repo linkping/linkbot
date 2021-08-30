@@ -19,7 +19,7 @@ const client = new Client('irc.libera.chat', 'linkbot', {
   stripColors: true
 })
 
-const say = text => client.say(config.bot.channel, text)
+const notice = (text) => client.notice(config.bot.channel, text)
 const tell = (who, text) => client.say(who, text)
 
 const mqtt = createMqttClient()
@@ -34,7 +34,7 @@ mqtt.on('message', (topic, message) => {
   const data = JSON.parse(message.toString())
   log.info('mqtt message', topic, data)
   if (topic === 'door/open') {
-    say(`door opened ${message.toString()}`)
+    notice(`door opened ${message.toString()}`)
   }
 })
 
@@ -58,6 +58,8 @@ client.on('message', (nick, to, text, message) => {
   log.info('message', nick, to, `'${text}'`, message)
   if (/^!help/.test(text)) {
     tell(nick, usage())
+  } else if (/^!ping/.test(text)) {
+    notice('pong')
   } else if (/^!/.test(text)) {
     tell(nick, `unknown command: '${text}'`)
   }
