@@ -4,7 +4,9 @@
 
 ## Functionality
 
-TODO. Just saying `'hello'` when being talked to for now.
+* `!help` prints usage
+* `!ping` the bot pongs back in channel
+* `!idea` print random idea in channel
 
 ## Development
 
