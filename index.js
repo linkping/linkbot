@@ -3,6 +3,8 @@ import { config } from './config.js'
 import createMqttClient from './mqtt.js'
 import log from './log.js'
 
+import idea from './scripts/idea.js'
+
 const client = new Client('irc.libera.chat', 'linkbot', {
   channels: [config.bot.channel],
   port: 6697,
@@ -60,6 +62,8 @@ client.on('message', (nick, to, text, message) => {
     tell(nick, usage())
   } else if (/^!ping/.test(text)) {
     notice('pong')
+  } else if (/^!idea/.test(text)) {
+    notice(idea())
   } else if (/^!/.test(text)) {
     tell(nick, `unknown command: '${text}'`)
   }
