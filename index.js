@@ -71,6 +71,7 @@ client.on('message', (nick, to, text, message) => {
 
 function usage () {
   return [
-    '!help -- this command (well duh)'
+    '!help -- this command (well duh)',
+    '!idea -- print random idea in channel'
   ].join('\n')
 }
