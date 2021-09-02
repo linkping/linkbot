@@ -9,5 +9,5 @@ test('command arguments', t => {
   t.deepEqual(getArgs('!foo bar'), ['bar'])
   t.deepEqual(getArgs('!foo   bar'), ['bar'])
   t.deepEqual(getArgs(' !foo   bar '), ['bar'])
-  t.deepEqual(getArgs(' !foo   bar  baz'), ['bar','baz'])
+  t.deepEqual(getArgs(' !foo   bar  baz'), ['bar', 'baz'])
 })
