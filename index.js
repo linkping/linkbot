@@ -2,8 +2,10 @@ import { Client } from 'matrix-org-irc'
 import { config } from './config.js'
 import createMqttClient from './mqtt.js'
 import log from './log.js'
+import { getArgs } from './util.js'
 
 import idea from './scripts/idea.js'
+import time from './scripts/time.js'
 
 const client = new Client('irc.libera.chat', 'linkbot', {
   channels: [config.bot.channel],
@@ -58,12 +60,15 @@ client.conn.addListener('timeout', () => {
 
 client.on('message', (nick, to, text, message) => {
   log.info('message', nick, to, `'${text}'`, message)
+  const args = getArgs(text)
   if (/^!help/.test(text)) {
     tell(nick, usage())
   } else if (/^!ping/.test(text)) {
     notice('pong')
   } else if (/^!idea/.test(text)) {
     notice(idea())
+  } else if (/^!time/.test(text)) {
+    notice(time(args))
   } else if (/^!/.test(text)) {
     tell(nick, `unknown command: '${text}'`)
   }
@@ -72,6 +77,7 @@ client.on('message', (nick, to, text, message) => {
 function usage () {
   return [
     '!help -- this command (well duh)',
-    '!idea -- print random idea in channel'
+    '!idea -- random idea',
+    '!time [arg] -- show time for a timezone'
   ].join('\n')
 }
