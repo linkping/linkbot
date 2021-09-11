@@ -5,8 +5,10 @@
 ## Functionality
 
 * `!help` prints usage
-* `!ping` the bot pongs back in channel
+* `!close` mark the hackerspace as closed (spaceapi will be updated) (op only)
 * `!idea` print random idea in channel
+* `!open` mark the hackerspace as opened (spaceapi will be updated) (op only)
+* `!ping` the bot pongs back in channel
 
 ## Development
 

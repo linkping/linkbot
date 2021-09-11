@@ -28,11 +28,11 @@ const tell = (who, text) => client.say(who, text)
 
 const mqtt = createMqttClient()
 
-// const publish = (topic, message) => {
-//   mqtt.publish(topic, JSON.stringify(message), { qos: 2 }, (err) => {
-//     if (err) log.error('mqtt.publish error', err)
-//   })
-// }
+const publish = (topic, message = '') => {
+  mqtt.publish(topic, JSON.stringify(message), { qos: 2 }, (err) => {
+    if (err) log.error('mqtt.publish error', err)
+  })
+}
 
 mqtt.on('message', (topic, message) => {
   const data = JSON.parse(message.toString())
@@ -61,10 +61,16 @@ client.conn.addListener('timeout', () => {
 client.on('message', (nick, to, text, message) => {
   log.info('message', nick, to, `'${text}'`, message)
   const args = getArgs(text)
-  if (/^!help/.test(text)) {
+  if (isOp(nick) && /^!close/.test(text)) {
+    publish('linkping/closed')
+    notice('we\'re closed!')
+  } else if (/^!help/.test(text)) {
     tell(nick, usage())
   } else if (/^!idea/.test(text)) {
     notice(idea())
+  } else if (isOp(nick) && /^!open/.test(text)) {
+    publish('linkping/open')
+    notice('we\'re open!')
   } else if (/^!ping/.test(text)) {
     notice('pong')
   } else if (/^!time/.test(text)) {
@@ -73,6 +79,13 @@ client.on('message', (nick, to, text, message) => {
     tell(nick, `unknown command: '${text}'`)
   }
 })
+
+function isOp (nick) {
+  return [
+    'rtn',
+    'gnyrfta'
+  ].includes(nick)
+}
 
 function usage () {
   return [
