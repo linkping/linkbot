@@ -62,7 +62,7 @@ client.on('message', (nick, to, text, message) => {
   log.info('message', nick, to, `'${text}'`, message)
   const args = getArgs(text)
   if (isOp(nick) && /^!close/.test(text)) {
-    publish('linkping/closed')
+    publish('linkping/close')
     notice('we\'re closed!')
   } else if (/^!help/.test(text)) {
     tell(nick, usage())
