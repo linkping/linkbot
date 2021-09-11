@@ -37,9 +37,9 @@ const mqtt = createMqttClient()
 mqtt.on('message', (topic, message) => {
   const data = JSON.parse(message.toString())
   log.info('mqtt message', topic, data)
-  if (topic === 'door/open') {
-    notice(`door opened ${message.toString()}`)
-  }
+  // if (topic === 'door/open') {
+  //   notice(`door opened ${message.toString()}`)
+  // }
 })
 
 client.connect(() => log.info('bot connected'))
