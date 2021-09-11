@@ -63,10 +63,10 @@ client.on('message', (nick, to, text, message) => {
   const args = getArgs(text)
   if (/^!help/.test(text)) {
     tell(nick, usage())
-  } else if (/^!ping/.test(text)) {
-    notice('pong')
   } else if (/^!idea/.test(text)) {
     notice(idea())
+  } else if (/^!ping/.test(text)) {
+    notice('pong')
   } else if (/^!time/.test(text)) {
     notice(time(args))
   } else if (/^!/.test(text)) {
