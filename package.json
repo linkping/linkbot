@@ -1,5 +1,5 @@
 {
-  "name": "linkbot",
+  "name": "irc-bot",
   "version": "0.0.0",
   "description": "linkping irc bot",
   "main": "index.js",
