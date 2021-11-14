@@ -1,4 +1,5 @@
 import { Client } from 'matrix-org-irc'
+import getUrls from 'get-urls'
 import { config } from './config.js'
 import createMqttClient from './mqtt.js'
 import log from './log.js'
@@ -6,6 +7,7 @@ import { getArgs } from './util.js'
 
 import idea from './scripts/idea.js'
 import time from './scripts/time.js'
+import getTitle from './scripts/title.js'
 
 const client = new Client('irc.libera.chat', 'linkbot', {
   channels: [config.bot.channel],
@@ -58,7 +60,7 @@ client.conn.addListener('timeout', () => {
   process.exit(0)
 })
 
-client.on('message', (nick, to, text, message) => {
+client.on('message', async (nick, to, text, message) => {
   log.info('message', nick, to, `'${text}'`, message)
   const args = getArgs(text)
   if (isOp(nick) && /^!close/.test(text)) {
@@ -77,6 +79,18 @@ client.on('message', (nick, to, text, message) => {
     notice(time(args))
   } else if (/^!/.test(text)) {
     tell(nick, `unknown command: '${text}'`)
+  } else {
+    // Actions on message content etc.
+    for (const url of getUrls(text)) {
+      try {
+        const title = await getTitle(url)
+        if (title) {
+          notice(`-> '${title}'`)
+        }
+      } catch (err) {
+        log.error('Failed to get title for url', url)
+      }
+    }
   }
 })
 
