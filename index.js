@@ -89,8 +89,10 @@ function isOp (nick) {
 
 function usage () {
   return [
-    '!help -- this command (well duh)',
-    '!idea -- random idea',
+    '!close      -- mark space as closed in spaceapi (op)',
+    '!help       -- this command (well duh)',
+    '!idea       -- random idea',
+    '!open       -- mark space as open in spaceapi (op)',
     '!time [arg] -- show time for a timezone'
   ].join('\n')
 }
