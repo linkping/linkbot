@@ -84,8 +84,8 @@ client.on('message', async (nick, to, text, message) => {
     for (const url of getUrls(text)) {
       try {
         const title = await getTitle(url)
-        if (title) {
-          notice(`-> '${title}'`)
+        if (typeof title === 'string') {
+          notice(`-> '${title.trim()}'`)
         }
       } catch (err) {
         log.error('Failed to get title for url', url)
