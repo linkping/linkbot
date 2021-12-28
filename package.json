@@ -7,10 +7,12 @@
   "dependencies": {
     "axios": "^0.24.0",
     "get-urls": "^10.0.1",
+    "level": "^7.0.1",
     "matrix-org-irc": "^1.0.0",
     "moment-timezone": "^0.5.33",
     "mqtt": "^4.2.6",
     "rc": "^1.2.8",
+    "subleveldown": "^6.0.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

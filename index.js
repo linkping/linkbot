@@ -5,6 +5,9 @@ import createMqttClient from './mqtt.js'
 import log from './log.js'
 import { getArgs } from './util.js'
 
+import level from 'level'
+import sub from 'subleveldown'
+
 import idea from './scripts/idea.js'
 import time from './scripts/time.js'
 import getTitle from './scripts/title.js'
@@ -29,6 +32,9 @@ const notice = (text) => client.notice(config.bot.channel, text)
 const tell = (who, text) => client.say(who, text)
 
 const mqtt = createMqttClient()
+
+const db = level(config.bot.db)
+const links = sub(db, 'links', { valueEncoding: 'json' })
 
 const publish = (topic, message = '') => {
   mqtt.publish(topic, JSON.stringify(message), { qos: 2 }, (err) => {
@@ -70,6 +76,11 @@ client.on('message', async (nick, to, text, message) => {
     tell(nick, usage())
   } else if (/^!idea/.test(text)) {
     notice(idea())
+  } else if (/^!links/.test(text)) {
+    for await (const [key, value] of links.iterator()) {
+      const date = (new Date(value.date)).toUTCString()
+      tell(nick, `${date} : ${value.nick} linked -> '${value.url}' -- '${value.title}'`)
+    }
   } else if (isOp(nick) && /^!open/.test(text)) {
     publish('linkping/open')
     notice('we\'re open!')
@@ -83,9 +94,12 @@ client.on('message', async (nick, to, text, message) => {
     // Actions on message content etc.
     for (const url of getUrls(text)) {
       try {
-        const title = await getTitle(url)
+        let title = await getTitle(url)
         if (typeof title === 'string') {
-          notice(`${nick} linked -> '${title.trim()}'`)
+          title = title.trim()
+          notice(`${nick} linked -> '${title}'`)
+          const date = Date.now()
+          await links.put(date, { nick, date, url, title })
         }
       } catch (err) {
         log.error('Failed to get title for url', url)
@@ -106,6 +120,7 @@ function usage () {
     '!close      -- mark space as closed in spaceapi (op)',
     '!help       -- this command (well duh)',
     '!idea       -- random idea',
+    '!links      -- show posted links',
     '!open       -- mark space as open in spaceapi (op)',
     '!time [arg] -- show time for a timezone'
   ].join('\n')
