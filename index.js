@@ -85,7 +85,7 @@ client.on('message', async (nick, to, text, message) => {
       try {
         const title = await getTitle(url)
         if (typeof title === 'string') {
-          notice(`-> '${title.trim()}'`)
+          notice(`${nick} linked -> '${title.trim()}'`)
         }
       } catch (err) {
         log.error('Failed to get title for url', url)
