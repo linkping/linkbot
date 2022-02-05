@@ -83,7 +83,7 @@ client.on('message', async (nick, to, text, message) => {
       tell(nick, `${date} : ${value.nick} linked -> '${value.url}' -- '${value.title}'`)
     }
   } else if (/^!map/.test(text) && args.length) {
-    const place = args[0]
+    const place = args.join(' ')
     placename(place, function (err, rows) {
       if (err) {
         log.error('placename failed', err)
