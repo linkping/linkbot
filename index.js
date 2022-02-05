@@ -1,5 +1,6 @@
 import { Client } from 'matrix-org-irc'
 import getUrls from 'get-urls'
+import placename from 'placename'
 import { config } from './config.js'
 import createMqttClient from './mqtt.js'
 import log from './log.js'
@@ -81,6 +82,20 @@ client.on('message', async (nick, to, text, message) => {
       const date = (new Date(value.date)).toUTCString()
       tell(nick, `${date} : ${value.nick} linked -> '${value.url}' -- '${value.title}'`)
     }
+  } else if (/^!map/.test(text) && args.length) {
+    const place = args[0]
+    placename(place, function (err, rows) {
+      if (err) {
+        log.error('placename failed', err)
+      } else if (rows.length) {
+        const { lon, lat } = rows[0]
+        const minx = lon - 0.01
+        const maxx = lon + 0.01
+        const miny = lat - 0.005
+        const maxy = lat + 0.005
+        notice(`-> https://peermaps.linkping.org/#bbox=${minx},${miny},${maxx},${maxy}`)
+      }
+    })
   } else if (isOp(nick) && /^!open/.test(text)) {
     publish('linkping/open')
     notice('we\'re open!')
@@ -121,6 +136,7 @@ function usage () {
     '!help       -- this command (well duh)',
     '!idea       -- random idea',
     '!links      -- show posted links',
+    '!map place  -- generate peermaps link for this place',
     '!open       -- mark space as open in spaceapi (op)',
     '!time [arg] -- show time for a timezone'
   ].join('\n')

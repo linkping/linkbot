@@ -11,6 +11,7 @@
     "matrix-org-irc": "^1.0.0",
     "moment-timezone": "^0.5.33",
     "mqtt": "^4.2.6",
+    "placename": "^1.1.2",
     "rc": "^1.2.8",
     "subleveldown": "^6.0.1",
     "uuid": "^8.3.2"
