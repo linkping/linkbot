@@ -10,6 +10,7 @@
 * `!links` tells the user the last posted links
 * `!open` mark the hackerspace as opened (spaceapi will be updated) (op only)
 * `!ping` the bot pongs back in channel
+* `!time [place]` prints the time for a place
 
 ## Development
 
