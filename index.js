@@ -94,11 +94,13 @@ client.on('message', async (nick, to, text, message) => {
           const maxx = lon + 0.01
           const miny = lat - 0.005
           const maxy = lat + 0.005
-          notice(`-> https://peermaps.linkping.org/#bbox=${minx},${miny},${maxx},${maxy}`)
+          notice(`https://peermaps.linkping.org/#bbox=${minx},${miny},${maxx},${maxy}`)
+        } else {
+          notice(`could not find ${place} on the map`)
         }
       })
     } else {
-      notice('-> https://peermaps.linkping.org/')
+      notice('https://peermaps.linkping.org/')
     }
   } else if (isOp(nick) && /^!open/.test(text)) {
     publish('linkping/open')
